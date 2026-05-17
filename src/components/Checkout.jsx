@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-// INGA THAAN MAATHI IRUKEN: (onNavigateBack, onPaymentSuccess) update panniyachu
-export default function Checkout({ onNavigateBack, onPaymentSuccess }) {
+// INGA THAAN MAATRAM: onProceedToPay add panniruken
+export default function Checkout({ onNavigateBack, onProceedToPay }) {
   // --- STATE MANAGEMENT ---
   const [phase, setPhase] = useState('2-Step');
   const [accountType, setAccountType] = useState('Standard');
@@ -22,9 +22,11 @@ export default function Checkout({ onNavigateBack, onPaymentSuccess }) {
 
   const isPromoActive = balance === '100k' && accountType === 'Standard';
   const currentPrice = isPromoActive ? PRICING['100k'].promo : PRICING[balance].price;
+  
+  // Rendu checkbox-um tick aana thaan button active aagum
   const isButtonActive = agreedTerms && agreedRefund;
 
-  // Reusable Radio Button
+  // Reusable Radio Button Circle
   const RadioCircle = ({ active }) => (
     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors shrink-0 ${active ? 'border-primary' : 'border-white/20'}`}>
       <div className={`w-2.5 h-2.5 rounded-full bg-primary transition-transform ${active ? 'scale-100' : 'scale-0'}`} />
@@ -36,7 +38,6 @@ export default function Checkout({ onNavigateBack, onPaymentSuccess }) {
       {/* HEADER */}
       <header className="border-b border-slate-800/80 bg-[#0B0E14]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
-            {/* BACK BUTTON UPDATED */}
             <div onClick={onNavigateBack} className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
                   <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -252,22 +253,22 @@ export default function Checkout({ onNavigateBack, onPaymentSuccess }) {
                     </div>
                 </div>
 
-                {/* PROCEED BUTTON UPDATED HERE */}
+                {/* INGA THAAN CHANGE PANNIRUKEN */}
                 <button 
                   disabled={!isButtonActive}
-  onClick={() => onProceedToPay(currentPrice)} 
-  className={`w-full px-6 py-4 rounded-xl text-lg font-bold transition-all duration-300 flex justify-center items-center gap-2
-    ${isButtonActive 
-      ? 'bg-primary hover:bg-blue-600 text-white shadow-[0_10px_30px_-10px_rgba(0,102,255,0.6)] transform hover:-translate-y-1' 
-      : 'bg-slate-800 text-slate-500 cursor-not-allowed'
-    }`}
->
-  Proceed to Crypto Payment <span className="text-xl">&rarr;</span>
-</button>
+                  onClick={() => onProceedToPay(currentPrice)} 
+                  className={`w-full px-6 py-4 rounded-xl text-lg font-bold transition-all duration-300 flex justify-center items-center gap-2
+                    ${isButtonActive 
+                      ? 'bg-primary hover:bg-blue-600 text-white shadow-[0_10px_30px_-10px_rgba(0,102,255,0.6)] transform hover:-translate-y-1' 
+                      : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                    }`}
+                >
+                  Proceed to Crypto Payment <span className="text-xl">&rarr;</span>
+                </button>
             </div>
         </div>
 
       </div>
     </div>
   );
-}
+                      }
